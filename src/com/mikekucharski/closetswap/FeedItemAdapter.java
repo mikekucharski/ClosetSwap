@@ -21,7 +21,7 @@ public class FeedItemAdapter extends ArrayAdapter<FeedItem>{
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Log.v("test", "getView() called!");
+		//Log.v("test", "getView() called!");
 		FeedItem item = (FeedItem) this.getItem(position);
 		
 		// use the layout file to generate a view

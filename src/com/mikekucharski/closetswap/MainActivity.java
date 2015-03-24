@@ -4,8 +4,13 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.parse.ParseUser;
+
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +22,7 @@ import android.support.v4.widget.ViewDragHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -36,12 +42,15 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
-		fragmentManager = getFragmentManager();
-	    fragmentManager.beginTransaction()
-				       .replace(R.id.content_frame, new FeedFragment())
-				       .commit();
 		
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		if (currentUser == null) {
+		    loadLoginView();
+		}
+		
+		fragmentManager = getFragmentManager();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		try {
 		Field mDragger = mDrawerLayout.getClass().getDeclaredField(
@@ -99,7 +108,8 @@ public class MainActivity extends FragmentActivity {
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getActionBar().setTitle("Navigation!");
+                //getActionBar().setTitle("Navigation!");
+                getActionBar().setIcon(R.drawable.ic_launcher);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -107,6 +117,7 @@ public class MainActivity extends FragmentActivity {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 getActionBar().setTitle(mActivityTitle);
+                getActionBar().setIcon(R.drawable.ic_launcher);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -118,10 +129,21 @@ public class MainActivity extends FragmentActivity {
         getActionBar().setDisplayShowHomeEnabled(false);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
-		 
-
+		
+		if (savedInstanceState == null) {
+	        selectItem(0);
+		}
 	}
 	
+	// Loads login activity for users not signed in
+	// sets flags to not allow users to press back button to return to MainActivity
+	private void loadLoginView() {
+		Intent intent = new Intent(this, LoginActivity.class);
+		 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+	    startActivity(intent);
+	}
+
 	@Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -140,7 +162,6 @@ public class MainActivity extends FragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		// wesley add something here
 		return true;
 	}
 
@@ -174,8 +195,11 @@ public class MainActivity extends FragmentActivity {
 		Toast.makeText(MainActivity.this, "Clicked " + name, Toast.LENGTH_SHORT).show();
 		
 		Fragment nextFragment;
-		if( name.equals("Feed")) {
+		if( name.equals("Feed") ) {
 			nextFragment = new FeedFragment();
+		} else if( name.equals("Logout") ) {
+			confirmLogout();
+    	    return;
 		} else {
 			nextFragment = new TestFragment();
 		}
@@ -194,6 +218,24 @@ public class MainActivity extends FragmentActivity {
 	    mDrawerList.setItemChecked(position, true);
 	    setTitle(drawerStrings[position]);
 	    mDrawerLayout.closeDrawer(mDrawerList);
+	}
+
+	private void confirmLogout() {
+		new AlertDialog.Builder(this)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .setTitle("Logout of Closet Swap")
+        .setMessage("Are you sure you want to leave the app?")
+        .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+	    {
+	        @Override
+	        public void onClick(DialogInterface dialog, int which) {
+	    		ParseUser.logOut();
+	    	    loadLoginView();   
+	        }
+	
+	    })
+	    .setNegativeButton("No", null)
+	    .show();		
 	}
 
 	public void setTitle(String title) {
