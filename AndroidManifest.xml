@@ -33,10 +33,10 @@
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
-            android:parentActivityName="com.mikekucharski.closetswap.LoginActivity" >
+            android:parentActivityName=".LoginActivity" >
             <meta-data
-		        android:name="android.support.PARENT_ACTIVITY"
-		        android:value="com.mikekucharski.closetswap.LoginActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mikekucharski.closetswap.LoginActivity" />
         </activity>
     </application>
 

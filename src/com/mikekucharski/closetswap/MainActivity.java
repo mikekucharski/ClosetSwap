@@ -200,8 +200,10 @@ public class MainActivity extends FragmentActivity {
 		} else if( name.equals("Logout") ) {
 			confirmLogout();
     	    return;
+		} else if( name.equals("Settings") ) {
+			nextFragment = new SettingsFragment();
 		} else {
-			nextFragment = new TestFragment();
+			nextFragment = new FeedFragment();
 		}
 		
 		// IF WE NEED TO ADD DATA TO THE FRAGMENT

@@ -10,6 +10,7 @@
     tools:context="com.mikekucharski.closetswap.RegisterActivity" >
 
     <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="22sp"

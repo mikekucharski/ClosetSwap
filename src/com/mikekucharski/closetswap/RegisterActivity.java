@@ -39,10 +39,10 @@ public class RegisterActivity extends Activity {
 		bSignup.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				String email = etEmail.getText().toString().trim();
-                String password = etPassword.getText().toString().trim();
-                String firstName = etFirstName.getText().toString().trim();
-                String lastName = etLastName.getText().toString().trim();
+				String email = etEmail.getText().toString().trim(),
+					   password = etPassword.getText().toString().trim(),
+				       firstName = etFirstName.getText().toString().trim(),
+				       lastName = etLastName.getText().toString().trim();
                 
                 if (email.isEmpty() || email.isEmpty() || firstName.isEmpty() || lastName.isEmpty()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
@@ -73,6 +73,8 @@ public class RegisterActivity extends Activity {
                     newUser.setUsername(email);
                     newUser.setPassword(password);
                     newUser.setEmail(email);
+                    newUser.put("firstName", firstName);
+                    newUser.put("lastName", lastName);
                     newUser.signUpInBackground(new SignUpCallback() {
                         @Override
                         public void done(ParseException e) {

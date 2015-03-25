@@ -27,5 +27,6 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="signup">Register</string>
     <string name="register_now">Register for an account</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
 </resources>
