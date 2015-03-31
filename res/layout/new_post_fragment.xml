@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:padding="10dp" >
+
+        <Button
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/back"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/createPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/createPost"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:padding="10dp">
+        
+    	<TextView
+        	android:id="@+id/postTitlePrompt"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="@string/postTitle_prompt"
+        	android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/postTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/postTitlePrompt"
+            android:ems="10"
+            android:inputType="text" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:padding="10dp" >
+
+        <Spinner
+            android:id="@+id/itemList"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="15dp"
+            android:entries="@array/item_array" />
+
+        <TextView
+            android:id="@+id/itemTypePrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/itemList_prompt"
+            android:textSize="20sp" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/sizePrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/sizePrompt"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/sizeList"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="17dp" 
+            android:entries="@array/waist_sizes"/>
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/conditionPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/condition_prompt"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/conditionList"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="20dp"
+            android:entries="@array/condition_array"
+            android:prompt="@string/condition_prompt" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:padding="10dp" >
+
+    	<TextView
+    	    android:id="@+id/colorPrompt"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_alignParentLeft="true"
+    	    android:layout_alignTop="@+id/colorName"
+    	    android:text="@string/colorPrompt"
+    	    android:textSize="20sp" />
+
+    	<EditText
+    	    android:id="@+id/colorName"
+    	    android:layout_width="175dp"
+    	    android:layout_height="wrap_content"
+    	    android:layout_alignParentRight="true"
+    	    android:layout_centerVertical="true"
+    	    android:ems="10"
+    	    android:inputType="text" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="10dp" >
+
+    	<TextView
+    	    android:id="@+id/descriptionPrompt"
+    	    android:layout_width="wrap_content"
+    	    android:layout_height="wrap_content"
+    	    android:layout_alignParentLeft="true"
+    	    android:text="@string/descriptionPrompt"
+    	    android:textSize="20sp" />
+
+    	<EditText
+    	    android:id="@+id/descriptionText"
+    	    android:layout_width="175dp"
+    	    android:layout_height="80dp"
+    	    android:layout_alignParentRight="true"
+    	    android:layout_alignParentTop="true"
+    	    android:ems="10"
+    	    android:inputType="text" >
+
+    	    <requestFocus />
+    	</EditText>
+    	
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/contactPrompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/contactText"
+            android:layout_alignParentLeft="true"
+            android:text="@string/contactPrompt"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/contactText"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:ems="10"
+            android:inputType="text" 
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+</LinearLayout>
