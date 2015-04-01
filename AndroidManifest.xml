@@ -38,6 +38,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.mikekucharski.closetswap.LoginActivity" />
         </activity>
+        <activity
+            android:name=".ItemDetailsActivity"
+            android:label="@string/title_activity_item_details" >
+        </activity>
     </application>
 
 </manifest>

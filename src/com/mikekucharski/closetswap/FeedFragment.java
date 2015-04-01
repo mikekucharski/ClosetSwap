@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -15,8 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -44,13 +48,27 @@ public class FeedFragment extends Fragment {
 	 	
 		mItems = new ArrayList<FeedItem>();
 		for(int i = 0; i < 4; i++ ) {
-			mItems.add(new FeedItem(defaultImage, "Mike Kucharski", "Shirt", "Medium"));
-			mItems.add(new FeedItem(defaultImage, "Chris Culatti", "Pants", "32 waist"));
-			mItems.add(new FeedItem(defaultImage, "Wesley Cai", "Belt", "Medium"));
+			mItems.add(new FeedItem("omg", defaultImage, "Mike Kucharski", "Shirt", "Medium"));
+			mItems.add(new FeedItem("omg", defaultImage, "Chris Culatti", "Pants", "32 waist"));
+			mItems.add(new FeedItem("omg", defaultImage, "Wesley Cai", "Belt", "Medium"));
 		}
 			
 	    lvPosts = (ListView) rootView.findViewById(R.id.lvPosts);
 	    lvPosts.setAdapter(new FeedItemAdapter(this.getActivity(), 0, mItems));
+	    
+	    lvPosts.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            	FeedItem itemClicked = mItems.get(position);
+            	
+            	Intent intent = new Intent(getActivity(), ItemDetailsActivity.class);
+            	Bundle b = new Bundle();
+            	b.putString("itemId", itemClicked.id);
+            	intent.putExtras(b);
+            	startActivity(intent);
+            }
+        });
+
 	    
 	    refreshPostList();
 	    return rootView;
@@ -79,7 +97,7 @@ public class FeedFragment extends Fragment {
 		getActivity().setProgressBarIndeterminateVisibility(true); 
 		
 	    ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
-	 
+
 	    query.findInBackground(new FindCallback<ParseObject>() {
 	 
 	        @Override
@@ -88,7 +106,7 @@ public class FeedFragment extends Fragment {
 	                // If there are results, update the list of posts and notify the adapter
 	                mItems.clear();
 	                for (ParseObject post : postList) {
-	                	FeedItem item = new FeedItem(defaultImage, "Mike Kucharski", post.getString("itemType"), post.getString("itemSize"));
+	                	FeedItem item = new FeedItem(post.getObjectId(), defaultImage, "Mike Kucharski", post.getString("itemType"), post.getString("itemSize"));
 //	                    FeedItem item = new FeedItem(post.getObjectId(), post.getString("title"), post.getString("content"));
 	                    mItems.add(item);
 	                }
