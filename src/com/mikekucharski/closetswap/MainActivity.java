@@ -81,7 +81,7 @@ public class MainActivity extends FragmentActivity {
 	    
 	    List<NavListItem> list = new ArrayList<NavListItem>();
 	    Bitmap defaultImage;
-	 	defaultImage = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+	 	defaultImage = BitmapFactory.decodeResource(getResources(), R.drawable.app_icon);
 	    
 	    drawerStrings = getResources().getStringArray(R.array.nav_drawer_items);
 	    //drawerIcons = getResources().getStringArray(R.array.nav_drawer_icons);
@@ -109,7 +109,7 @@ public class MainActivity extends FragmentActivity {
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 //getActionBar().setTitle("Navigation!");
-                getActionBar().setIcon(R.drawable.ic_launcher);
+                getActionBar().setIcon(R.drawable.app_icon);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -117,7 +117,7 @@ public class MainActivity extends FragmentActivity {
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 getActionBar().setTitle(mActivityTitle);
-                getActionBar().setIcon(R.drawable.ic_launcher);
+                getActionBar().setIcon(R.drawable.app_icon);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -139,8 +139,8 @@ public class MainActivity extends FragmentActivity {
 	// sets flags to not allow users to press back button to return to MainActivity
 	private void loadLoginView() {
 		Intent intent = new Intent(this, LoginActivity.class);
-		 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
 	    startActivity(intent);
 	}
 
@@ -229,8 +229,7 @@ public class MainActivity extends FragmentActivity {
         .setIcon(android.R.drawable.ic_dialog_alert)
         .setTitle("Logout of Closet Swap")
         .setMessage("Are you sure you want to leave the app?")
-        .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-	    {
+        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 	        @Override
 	        public void onClick(DialogInterface dialog, int which) {
 	    		ParseUser.logOut();
@@ -238,7 +237,13 @@ public class MainActivity extends FragmentActivity {
 	        }
 	
 	    })
-	    .setNegativeButton("No", null)
+	    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+	        @Override
+	        public void onClick(DialogInterface dialog, int which) {
+	        	selectItem(0);
+	        }
+	
+	    })
 	    .show();		
 	}
 

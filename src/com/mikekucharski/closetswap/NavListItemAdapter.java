@@ -24,19 +24,18 @@ public class NavListItemAdapter extends ArrayAdapter<NavListItem>{
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Log.v("test", "getView() called!");
-		//NavListItem item = (NavListItem) this.getItem(position);
+		NavListItem item = navItems.get(position);
 		
 		// use the layout file to generate a view
 		View view = inflator.inflate(R.layout.drawer_list_item, null);
 		
 		// set image
 		ImageView icon = (ImageView) view.findViewById(R.id.icon);
-		icon.setImageBitmap(navItems.get(position).icon);
+		icon.setImageBitmap(item.icon);
 		
 		// set user name
 		TextView name = (TextView) view.findViewById(R.id.name);
-		name.setText(navItems.get(position).name);
+		name.setText(item.name);
 		
 		return view;
 	}

@@ -1,18 +1,18 @@
 package com.mikekucharski.closetswap;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.mikekucharski.closetswap.R.id;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -20,9 +20,10 @@ import com.parse.ParseQuery;
 
 public class ItemDetailsActivity extends Activity {
 
-	private TextView tvDescription, tvSize, tvCategory, tvDate;
+	private TextView tvDescription, tvColor, tvSize, tvCategory, tvDate, tvNameEmail, tvTitle;
 	private ImageView ivClothingImage;
 	private Button bSendEmail;
+	private String email, title;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +36,15 @@ public class ItemDetailsActivity extends Activity {
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setTitle("Item Details");
 		
+		email=title="";
 		// Link layout elements to Java
 		tvDescription = (TextView) this.findViewById(R.id.tvDescription);
 		tvSize = (TextView) this.findViewById(R.id.tvSize);
 		tvCategory = (TextView) this.findViewById(R.id.tvCategory);
 		tvDate = (TextView) this.findViewById(R.id.tvDate);
+		tvColor = (TextView) this.findViewById(R.id.tvColor);
+		tvNameEmail = (TextView) this.findViewById(R.id.tvNameEmail);
+		tvTitle = (TextView) this.findViewById(R.id.tvTitle);
 		ivClothingImage = (ImageView) this.findViewById(R.id.ivClothingImage);
 		bSendEmail = (Button) this.findViewById(R.id.bSendEmail);
 		
@@ -48,7 +53,6 @@ public class ItemDetailsActivity extends Activity {
 		Bundle extras = getIntent().getExtras(); 
 		if( extras != null && extras.getString("itemId") != null){
 			itemId = extras.getString("itemId");
-			Log.v("test",itemId);
 		}else{
 			// destroy activity
 			this.finish();
@@ -56,25 +60,51 @@ public class ItemDetailsActivity extends Activity {
 		
 		// Query for additional post info using objectId
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
+		query.include("owner");
 		query.getInBackground(itemId, new GetCallback<ParseObject>() {
 			@Override
 		    public void done(ParseObject post, ParseException e) {
 		        if (e == null) {
-		        	// format date
-		        	DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy 'at' HH:mm");
-		        	String dateFormatted = formatter.format(post.getCreatedAt());
+		        	// get the user who made the post
+		        	ParseObject user = post.getParseObject("owner");
 		        	
+		        	String dateFormatted = Utility.dateFormat(post.getCreatedAt());
+		        	String fullName = user.getString("firstName") + " " + user.getString("lastName");
+		        	
+		        	// set up data used for sending email
+		        	email = user.getString("email");
+		        	title = post.getString("title");
+		        	
+		        	// add post data to layout
+		        	tvNameEmail.setText(fullName + ",  " + email);
+		        	tvTitle.setText(title);
 		        	tvDescription.setText(post.getString("description"));
+		        	tvColor.setText(post.getString("color"));
 		        	tvCategory.setText(post.getString("itemType"));
 		        	tvDate.setText(dateFormatted);
 		        	tvSize.setText(post.getString("itemSize"));
-		        	
-		        	
-		        	Log.v("test", post.getString("itemSize"));
+
 		        } else {
 		        	Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
 		        }
 			}
+		});
+		
+		bSendEmail.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(Intent.ACTION_SEND);
+				i.setType("text/plain");
+				i.putExtra(Intent.EXTRA_EMAIL  , new String[]{email});
+				i.putExtra(Intent.EXTRA_SUBJECT, "Re: " + title);
+				i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				try {
+				    startActivity(Intent.createChooser(i, "Send mail..."));
+				} catch (android.content.ActivityNotFoundException ex) {
+				    Toast.makeText(ItemDetailsActivity.this, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+				}
+			}
+			
 		});
 	}
 

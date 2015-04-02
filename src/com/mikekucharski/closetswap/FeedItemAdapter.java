@@ -27,17 +27,20 @@ public class FeedItemAdapter extends ArrayAdapter<FeedItem>{
 		// use the layout file to generate a view
 		View view = inflater.inflate(R.layout.feed_item, null);
 		
-		ImageView ivClothingIcon = (ImageView) view.findViewById(R.id.ivClothingIcon);
-		ivClothingIcon.setImageBitmap(item.image);
+		ImageView ivCategory = (ImageView) view.findViewById(R.id.ivCategory);
+		ivCategory.setImageBitmap(item.categoryIcon);
 		
-		TextView tvFullName = (TextView) view.findViewById(R.id.tvFullName);
-		tvFullName.setText(item.name);
+		ImageView ivThumbnail = (ImageView) view.findViewById(R.id.ivThumbnail);
+		ivThumbnail.setImageBitmap(item.thumbnail);
 		
-		TextView tvItemType = (TextView) view.findViewById(R.id.tvItemType);
-		tvItemType.setText(item.itemType);
+		TextView tvSize = (TextView) view.findViewById(R.id.tvItemSize);
+		tvSize.setText(item.size);
 		
-		TextView tvItemSize = (TextView) view.findViewById(R.id.tvItemSize);
-		tvItemSize.setText(item.itemSize);
+		TextView tvDate = (TextView) view.findViewById(R.id.tvPostDate);
+		tvDate.setText(item.datePosted);
+		
+		TextView tvTitle = (TextView) view.findViewById(R.id.tvTitle);
+		tvTitle.setText(item.title);
 		
 		return view;
 	}
