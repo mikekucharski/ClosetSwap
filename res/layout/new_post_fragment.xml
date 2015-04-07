@@ -62,7 +62,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="15dp"
-            android:entries="@array/item_array" />
+            android:entries="@array/category_array" />
 
         <TextView
             android:id="@+id/itemTypePrompt"

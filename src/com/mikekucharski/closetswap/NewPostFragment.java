@@ -1,10 +1,5 @@
 package com.mikekucharski.closetswap;
 
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.SaveCallback;
-import com.parse.SignUpCallback;
-
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Intent;
@@ -17,6 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class NewPostFragment extends Fragment {
 
@@ -152,6 +152,7 @@ public class NewPostFragment extends Fragment {
                     getActivity().setProgressBarIndeterminateVisibility(true);
                     
                     ParseObject newPost = new ParseObject("Post");
+                    newPost.put("owner", ParseUser.getCurrentUser());
                     newPost.put("title", title);
                     newPost.put("description", description);
                     newPost.put("itemType", type);

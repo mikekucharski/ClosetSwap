@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent">
+    
+<LinearLayout 
+    android:padding="10dp"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+   	<TextView
+        android:id="@+id/tvTitle"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+   	
+    <TextView
+        android:id="@+id/tvNameEmail"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    	    
+    <ImageView
+        android:id="@+id/ivClothingImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/app_icon"
+        android:layout_gravity="center"
+        android:paddingTop="10dp"
+        android:contentDescription="@string/image_description" />
+    
+    <LinearLayout 
+	    android:padding="5dp"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" >
+	    <TextView
+	        android:id="@+id/datelabel"
+	        android:textSize="18sp"
+	        android:textStyle="bold"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/datelabel" />
+	    <TextView
+	        android:id="@+id/tvDate"
+	        android:textSize="18sp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" />
+	</LinearLayout>
+	
+    <LinearLayout 
+	    android:padding="5dp"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" >
+	    <TextView
+	        android:id="@+id/categorylabel"
+	        android:textSize="18sp"
+	        android:textStyle="bold"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/itemlabel" />
+	    <TextView
+	        android:id="@+id/tvCategory"
+	        android:textSize="18sp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" />
+	</LinearLayout>
+	
+    <LinearLayout 
+	    android:padding="5dp"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" >
+	    <TextView
+	        android:id="@+id/sizelabel"
+	        android:textSize="18sp"
+	        android:textStyle="bold"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/sizelabel" />
+	    <TextView
+	        android:id="@+id/tvSize"
+	        android:textSize="18sp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"/>
+    </LinearLayout>
+    
+    <LinearLayout 
+	    android:padding="5dp"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal" >
+	    <TextView
+	        android:id="@+id/colorlabel"
+	        android:textSize="18sp"
+	        android:textStyle="bold"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/sizelabel" />
+	    <TextView
+	        android:id="@+id/tvColor"
+	        android:textSize="18sp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"/>
+    </LinearLayout>
+    
+    <LinearLayout 
+	    android:padding="5dp"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+	    <TextView
+	        android:id="@+id/descriptionlabel"
+	        android:textSize="18sp"
+	        android:textStyle="bold"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/descriptionlabel" />
+	    <TextView
+	        android:id="@+id/tvDescription"
+	        android:textSize="18sp"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" />
+    </LinearLayout>
+    
+    <Button
+        android:id="@+id/bSendEmail"
+        android:textSize="18sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/send_email" />
+</LinearLayout>
+
+</ScrollView>

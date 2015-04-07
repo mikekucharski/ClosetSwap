@@ -28,26 +28,36 @@
     <string name="signup">Register</string>
     <string name="register_now">Register for an account</string>
     <string name="title_activity_settings">SettingsActivity</string>
+
+    <string name="title_activity_item_details">ItemDetailsActivity</string>
+
+    <string name="image_description">Clothing Image</string>
+    <string name="send_email">Send Email</string>
+    <string name="datelabel">"Date Posted: "</string>
+    <string name="itemlabel">"Category: "</string>
+    <string name="sizelabel">"Size: "</string>
+    <string name="colorlabel">"Color: "</string>
+    <string name="descriptionlabel">"Description: "</string>
     
+    <string name="emptyPosts">There are no posts to display. Adding more friends will increase the amount of posts you will see.</string>
     <!-- Start of new_post_fragment.xml strings -->
     
     <string name="postTitle_prompt">Post Title: </string>
     <string name="itemList_prompt">Item Type: </string>
     <string name="sizePrompt">Item Size: </string>
     <string name="condition_prompt">Condition: </string>
-    <string-array name="item_array">
+    <string-array name="category_array">
         <item> </item>
         <item>T-Shirt</item>
-        <item>Longsleeve Shirt</item>
+        <item>Dress Shirt</item>
+        <item>Coat</item>
         <item>Shorts</item>
         <item>Pants</item>
-        <item>Hat</item>
-        <item>Shoes - Mens</item>
-        <item>Shoes - Womens</item>
-        <item>Coat</item>
-        <item>Sweatshirt</item>
-        <item>Belt</item>
         <item>Dress</item>
+        <item>Skirt</item>
+        <item>Hat</item>
+        <item>Mens Shoes</item>
+        <item>Womens Shoes</item>
     </string-array>
     <string-array name="condition_array">
         <item> </item>
@@ -142,8 +152,7 @@
     <string name="contactPrompt">Contact Info: </string>
     <string name="back">Back</string>
     <string name="createPost">Create Post</string>
-    
-    <!-- End of new_post_fragment.xml strings -->
-    
 
+    <!-- End of new_post_fragment.xml strings -->
+ 
 </resources>
