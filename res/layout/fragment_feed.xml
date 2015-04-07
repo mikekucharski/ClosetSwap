@@ -4,6 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
+    <EditText 
+        android:id="@+id/etSearchBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/search"/>
+    
     <ListView
 		android:id="@+id/lvPosts"
 		android:layout_width="fill_parent"

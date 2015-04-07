@@ -10,6 +10,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,6 +23,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,6 +37,7 @@ public class FeedFragment extends Fragment {
 	private List<FeedItem> mItems;        // ListView items list
 	private Bitmap categoryIcon;
 	private ListView lvPosts;
+	private EditText etSearchBar;
 	
 	public void onActivityCreated(Bundle savedInstanceState) {
 	  super.onActivityCreated(savedInstanceState);
@@ -47,6 +51,7 @@ public class FeedFragment extends Fragment {
 
 		mItems = new ArrayList<FeedItem>();
 	    lvPosts = (ListView) rootView.findViewById(R.id.lvPosts);
+	    etSearchBar = (EditText) rootView.findViewById(R.id.etSearchBar);
 	    
 	    lvPosts.setAdapter(new FeedItemAdapter(this.getActivity(), 0, mItems));
 	    
@@ -62,6 +67,32 @@ public class FeedFragment extends Fragment {
             	startActivity(intent);
             }
         });
+	    
+	    etSearchBar.addTextChangedListener(new TextWatcher()
+	    {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				// TODO Auto-generated method stub
+				String textValue = etSearchBar.getText().toString().trim();
+				refreshPostList(textValue);
+				
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// TODO Auto-generated method stub
+				
+			}
+	    	
+	    });
 	    
 	    HashMap<String, Integer> imageResources = new HashMap<String, Integer>();
 	    //imageResources.put("clothing_t_shirt.jpg", value);
@@ -96,6 +127,59 @@ public class FeedFragment extends Fragment {
 	    ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
 	    query.orderByDescending("createdAt");
 	    query.findInBackground(new FindCallback<ParseObject>() {
+	 
+	        @Override
+	        public void done(List<ParseObject> postList, ParseException e) {
+	            if (e == null) {
+	                // If there are results, update the list of posts and notify the adapter
+	                mItems.clear();
+	                Bitmap defaultImage = BitmapFactory.decodeResource(getResources(), R.drawable.app_icon);
+	                for (ParseObject post : postList) {  	
+	                	String imageFilename = Utility.getImageName(post.getString("itemType"));
+	                	int imageResource = getResources().getIdentifier(imageFilename, "drawable", getActivity().getPackageName());
+	                	categoryIcon = BitmapFactory.decodeResource(getResources(), imageResource);
+	                	String datePosted = Utility.dateFormat(post.getCreatedAt());
+	                	FeedItem item = new FeedItem(post.getObjectId(), 
+	                								 defaultImage, 
+	                								 categoryIcon, 
+	                								 post.getString("title"), 
+	                								 datePosted, 
+	                								 post.getString("itemSize"));
+	                    mItems.add(item);
+	                }
+	                ((BaseAdapter) lvPosts.getAdapter()).notifyDataSetChanged();
+	               
+	                getActivity().setProgressBarIndeterminateVisibility(false);
+	            } else {
+	                Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
+	            }
+	        }
+	    });
+	}
+	
+	private void refreshPostList(String text) {
+		getActivity().setProgressBarIndeterminateVisibility(true); 
+		
+		List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+		
+	    ParseQuery<ParseObject> query1 = ParseQuery.getQuery("Post");
+	    query1.whereContains("title", text);
+	    ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Post");
+	    query2.whereContains("itemType", text);
+	    ParseQuery<ParseObject> query3 = ParseQuery.getQuery("Post");
+	    query3.whereContains("itemSize", text);
+	    ParseQuery<ParseObject> query4 = ParseQuery.getQuery("Post");
+	    query4.whereContains("color", text);
+	    
+	    queries.add(query1);
+	    queries.add(query2);
+	    queries.add(query3);
+	    queries.add(query4);
+	    
+	    ParseQuery<ParseObject> mainQuery = ParseQuery.or(queries);
+	    
+	    mainQuery.orderByDescending("createdAt");
+	    mainQuery.findInBackground(new FindCallback<ParseObject>() {
 	 
 	        @Override
 	        public void done(List<ParseObject> postList, ParseException e) {

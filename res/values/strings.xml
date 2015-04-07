@@ -6,6 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="search">Search...</string>
 
     <string-array name="nav_drawer_items">
         <item>Feed</item>
