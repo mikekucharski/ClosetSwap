@@ -6,15 +6,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:padding="10dp" >
+        android:layout_height="40dp"
+        android:padding="3dp" >
 
         <Button
-            android:id="@+id/backBtn"
+            android:id="@+id/bUploadBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/back"
-            android:textSize="20sp" />
+            android:text="@string/uploadPic"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/createPost"
@@ -23,14 +23,29 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:text="@string/createPost"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
     </RelativeLayout>
     
     <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:padding="3dp">
+
+        <ImageView
+            android:id="@+id/newPic_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/app_icon" />
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:padding="10dp">
+        android:layout_height="40dp"
+        android:padding="3dp">
         
     	<TextView
         	android:id="@+id/postTitlePrompt"
@@ -52,13 +67,13 @@
     
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:padding="10dp" >
+        android:layout_height="45dp"
+        android:padding="3dp" >
 
         <Spinner
             android:id="@+id/itemList"
             android:layout_width="130dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="15dp"
@@ -77,8 +92,8 @@
     
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:padding="10dp" >
+        android:layout_height="45dp"
+        android:padding="3dp" >
 
         <TextView
             android:id="@+id/sizePrompt"
@@ -92,7 +107,7 @@
         <Spinner
             android:id="@+id/sizeList"
             android:layout_width="130dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="17dp" 
@@ -102,8 +117,8 @@
     
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:padding="10dp" >
+        android:layout_height="45dp"
+        android:padding="3dp" >
 
         <TextView
             android:id="@+id/conditionPrompt"
@@ -117,7 +132,7 @@
         <Spinner
             android:id="@+id/conditionList"
             android:layout_width="130dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:layout_marginRight="20dp"
@@ -128,8 +143,8 @@
     
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:padding="10dp" >
+        android:layout_height="40dp"
+        android:padding="3dp" >
 
     	<TextView
     	    android:id="@+id/colorPrompt"
@@ -153,8 +168,8 @@
     
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:padding="10dp" >
+        android:layout_height="60dp"
+        android:padding="3dp" >
 
     	<TextView
     	    android:id="@+id/descriptionPrompt"
@@ -180,8 +195,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:padding="10dp" >
+        android:layout_height="40dp"
+        android:padding="3dp" >
 
         <TextView
             android:id="@+id/contactPrompt"

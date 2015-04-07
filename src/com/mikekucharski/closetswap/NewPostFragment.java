@@ -1,8 +1,10 @@
 package com.mikekucharski.closetswap;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.parse.ParseException;
@@ -21,12 +24,14 @@ import com.parse.SaveCallback;
 public class NewPostFragment extends Fragment {
 
 	private EditText etTitle, etColor, etDescription, etContactInfo;
-	private Button bBackBtn, bCreatePost;
+	private ImageView imageView;
+	private Button bUploadBtn, bCreatePost;
 	private Spinner sItemType, sItemSize, sCondition;
 	private String title, color, description, contactInfo, type, size, condition;
 	private StringBuilder errorDialog;
 	private Drawable defaultEditTextBackground;
 	private Drawable defaultSpinnerBackground;
+	private static final int CAMERA_ID = 1888;
 	
 	
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -40,27 +45,31 @@ public class NewPostFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.new_post_fragment, container, false);
 		
 		etTitle = (EditText)rootView.findViewById(R.id.postTitle);
+		
 		etColor = (EditText)rootView.findViewById(R.id.colorName);
 		etDescription = (EditText)rootView.findViewById(R.id.descriptionText);
 		etContactInfo = (EditText)rootView.findViewById(R.id.contactText);
+		imageView = (ImageView) rootView.findViewById(R.id.newPic_imageView);
 		
-		bBackBtn = (Button)rootView.findViewById(R.id.backBtn);
+		
+		bUploadBtn = (Button)rootView.findViewById(R.id.bUploadBtn);
 		bCreatePost = (Button)rootView.findViewById(R.id.createPost);
 		
 		sItemType = (Spinner)rootView.findViewById(R.id.itemList);
 		sItemSize = (Spinner)rootView.findViewById(R.id.sizeList);
 		sCondition = (Spinner)rootView.findViewById(R.id.conditionList);
 		
-		bBackBtn.setOnClickListener(new View.OnClickListener() {
+		bUploadBtn.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent,CAMERA_ID);
+
 			}
 		});
+		
+		
 		
 		bCreatePost.setOnClickListener(new View.OnClickListener() {
 
@@ -189,5 +198,16 @@ public class NewPostFragment extends Fragment {
 		
 		return rootView;
 	}
+	
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(CAMERA_ID == requestCode && resultCode == Activity.RESULT_OK){
+			Bitmap photo = (Bitmap) data.getExtras().get("data");
+			imageView.setImageBitmap(photo);
+		}
+	}
+	
 	
 }

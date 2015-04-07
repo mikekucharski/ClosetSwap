@@ -38,6 +38,7 @@
     <string name="sizelabel">"Size: "</string>
     <string name="colorlabel">"Color: "</string>
     <string name="descriptionlabel">"Description: "</string>
+    <string name="uploadPic">Upload</string>
     
     <string name="emptyPosts">There are no posts to display. Adding more friends will increase the amount of posts you will see.</string>
     <!-- Start of new_post_fragment.xml strings -->
