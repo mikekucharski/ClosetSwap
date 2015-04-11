@@ -1,14 +1,13 @@
 package com.mikekucharski.closetswap;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,16 +18,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -38,10 +36,18 @@ public class FeedFragment extends Fragment {
 	private Bitmap categoryIcon;
 	private ListView lvPosts;
 	private EditText etSearchBar;
+	private Bitmap image;
+	private Activity mActivity;
 	
 	public void onActivityCreated(Bundle savedInstanceState) {
 	  super.onActivityCreated(savedInstanceState);
 	}
+	
+	@Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mActivity = activity;
+    }
 	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -73,13 +79,10 @@ public class FeedFragment extends Fragment {
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void afterTextChanged(Editable s) {
-				// TODO Auto-generated method stub
 				String textValue = etSearchBar.getText().toString().trim();
 				refreshPostList(textValue);
 				
@@ -88,17 +91,13 @@ public class FeedFragment extends Fragment {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
 					int after) {
-				// TODO Auto-generated method stub
-				
 			}
 	    	
 	    });
 	    
-	    HashMap<String, Integer> imageResources = new HashMap<String, Integer>();
-	    //imageResources.put("clothing_t_shirt.jpg", value);
-	    
 	    refreshPostList();
 	    lvPosts.setEmptyView(rootView.findViewById(R.id.empty_list));
+	    
 	    return rootView;
     }
 	
@@ -127,29 +126,43 @@ public class FeedFragment extends Fragment {
 	    ParseQuery<ParseObject> query = ParseQuery.getQuery("Post");
 	    query.orderByDescending("createdAt");
 	    query.findInBackground(new FindCallback<ParseObject>() {
-	 
+	    	
 	        @Override
 	        public void done(List<ParseObject> postList, ParseException e) {
 	            if (e == null) {
 	                // If there are results, update the list of posts and notify the adapter
 	                mItems.clear();
-	                Bitmap defaultImage = BitmapFactory.decodeResource(getResources(), R.drawable.app_icon);
 	                for (ParseObject post : postList) {  	
 	                	String imageFilename = Utility.getImageName(post.getString("itemType"));
-	                	int imageResource = getResources().getIdentifier(imageFilename, "drawable", getActivity().getPackageName());
-	                	categoryIcon = BitmapFactory.decodeResource(getResources(), imageResource);
-	                	String datePosted = Utility.dateFormat(post.getCreatedAt());
+	                	int imageResource = mActivity.getResources().getIdentifier(imageFilename, "drawable", mActivity.getPackageName());
+	                	categoryIcon = BitmapFactory.decodeResource(mActivity.getResources(), imageResource);
+	                	
+	                	ParseFile img = (ParseFile) post.get("image");
+	                	if(img != null)
+	                	{
+							try {
+								byte[] bitmapdata = img.getData();
+								image = BitmapFactory.decodeByteArray(bitmapdata , 0, bitmapdata.length);
+							} catch (ParseException e1) {
+								Log.v("", e1.getMessage());
+							}
+	                	}
+	                	else
+	                	{
+	                		image = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.app_icon);
+	                	}
+	                	
 	                	FeedItem item = new FeedItem(post.getObjectId(), 
-	                								 defaultImage, 
+	                								 image, 
 	                								 categoryIcon, 
 	                								 post.getString("title"), 
-	                								 datePosted, 
+	                								 Utility.dateFormat(post.getCreatedAt()), 
 	                								 post.getString("itemSize"));
 	                    mItems.add(item);
 	                }
 	                ((BaseAdapter) lvPosts.getAdapter()).notifyDataSetChanged();
 	               
-	                getActivity().setProgressBarIndeterminateVisibility(false);
+	                mActivity.setProgressBarIndeterminateVisibility(false);
 	            } else {
 	                Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
 	            }
@@ -158,10 +171,11 @@ public class FeedFragment extends Fragment {
 	}
 	
 	private void refreshPostList(String text) {
-		getActivity().setProgressBarIndeterminateVisibility(true); 
+		mActivity.setProgressBarIndeterminateVisibility(true); 
 		
+		// Create multiple queries and combine into one query
+		// Filters for title, itemType, itemSize, and color based on text
 		List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
-		
 	    ParseQuery<ParseObject> query1 = ParseQuery.getQuery("Post");
 	    query1.whereContains("title", text);
 	    ParseQuery<ParseObject> query2 = ParseQuery.getQuery("Post");
@@ -186,23 +200,38 @@ public class FeedFragment extends Fragment {
 	            if (e == null) {
 	                // If there are results, update the list of posts and notify the adapter
 	                mItems.clear();
-	                Bitmap defaultImage = BitmapFactory.decodeResource(getResources(), R.drawable.app_icon);
+	                
 	                for (ParseObject post : postList) {  	
 	                	String imageFilename = Utility.getImageName(post.getString("itemType"));
-	                	int imageResource = getResources().getIdentifier(imageFilename, "drawable", getActivity().getPackageName());
-	                	categoryIcon = BitmapFactory.decodeResource(getResources(), imageResource);
-	                	String datePosted = Utility.dateFormat(post.getCreatedAt());
+	                	int imageResource = mActivity.getResources().getIdentifier(imageFilename, "drawable", getActivity().getPackageName());
+	                	categoryIcon = BitmapFactory.decodeResource(mActivity.getResources(), imageResource);
+	                	
+	                	ParseFile img = (ParseFile) post.get("image");
+	                	if(img != null)
+	                	{
+							try {
+								byte[] bitmapdata = img.getData();
+								image = BitmapFactory.decodeByteArray(bitmapdata , 0, bitmapdata.length);
+							} catch (ParseException e1) {
+								Log.v("", e1.getMessage());
+							}
+	                	}
+	                	else
+	                	{
+	                		image = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.app_icon);
+	                	}
+	                	
 	                	FeedItem item = new FeedItem(post.getObjectId(), 
-	                								 defaultImage, 
+	                								 image, 
 	                								 categoryIcon, 
 	                								 post.getString("title"), 
-	                								 datePosted, 
+	                								 Utility.dateFormat(post.getCreatedAt()), 
 	                								 post.getString("itemSize"));
 	                    mItems.add(item);
 	                }
 	                ((BaseAdapter) lvPosts.getAdapter()).notifyDataSetChanged();
 	               
-	                getActivity().setProgressBarIndeterminateVisibility(false);
+	                mActivity.setProgressBarIndeterminateVisibility(false);
 	            } else {
 	                Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());
 	            }

@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" 
     android:orientation="vertical">
-
+	
+    <!-- Start of Buttons View -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -14,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/uploadPic"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/createPost"
@@ -23,10 +24,12 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:text="@string/createPost"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
     </RelativeLayout>
+        <!-- End of Buttons View -->
     
+        <!-- Start of Image View -->
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="80dp"
@@ -41,7 +44,9 @@
             android:src="@drawable/app_icon" />
         
     </RelativeLayout>
+    <!-- End of Image View -->
     
+    <!-- Start of Title View -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -64,7 +69,9 @@
             android:inputType="text" />
         
     </RelativeLayout>
+    <!-- End of Title View -->
     
+    <!-- Start of ItemType View -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -89,7 +96,9 @@
             android:textSize="20sp" />
         
     </RelativeLayout>
+    <!-- End of ItemType View -->
     
+    <!-- Start of ItemSize View -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -104,17 +113,18 @@
             android:text="@string/sizePrompt"
             android:textSize="20sp" />
 
-        <Spinner
-            android:id="@+id/sizeList"
-            android:layout_width="130dp"
-            android:layout_height="40dp"
+        <EditText
+            android:id="@+id/size"
+            android:layout_width="175dp"
+            android:layout_height="wrap_content" 
             android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="17dp" 
-            android:entries="@array/waist_sizes"/>
-        
+    	    android:layout_centerVertical="true"
+    	    android:ems="10"
+    	    android:inputType="text"/>
     </RelativeLayout>
+            <!-- End of ItemSize View -->
     
+            <!-- Start of Condition View -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
@@ -140,7 +150,9 @@
             android:prompt="@string/condition_prompt" />
         
     </RelativeLayout>
+    <!-- End of Condition View -->
     
+    <!-- Start of Color View -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -165,7 +177,9 @@
     	    android:inputType="text" />
         
     </RelativeLayout>
+    <!-- End of Color View -->
     
+    <!-- Start of Description View -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -192,7 +206,9 @@
     	</EditText>
     	
     </RelativeLayout>
+    <!-- End of Description View -->
 
+	<!-- Start of Contact View -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -217,5 +233,6 @@
             android:inputType="text" 
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
+    <!-- End of Contact View -->
 
 </LinearLayout>

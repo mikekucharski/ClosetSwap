@@ -7,11 +7,13 @@
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
     <string name="search">Search...</string>
+    <string name="emptyList">Type in the search box above to find friends...</string>
+    <string name="addUser">+</string>
 
     <string-array name="nav_drawer_items">
         <item>Feed</item>
         <item>New Post</item>
-        <item>Find Friends</item>
+        <item>Find Users</item>
         <item>Settings</item>
         <item>Logout</item>
     </string-array>
@@ -84,69 +86,6 @@
         <item>90%</item>
         <item>95%</item>
         <item>100%</item>
-    </string-array>
-    
-    <string-array name="shirt_sizes">
-        <item></item>
-        <item>XS</item>
-        <item>S</item>
-        <item>M</item>
-        <item>L</item>
-        <item>XL</item>
-        <item>XXL</item>
-        <item>XXXL</item>
-    </string-array>
-    
-    <string-array name="dress_sizes">
-        <item></item>
-        <item>00</item>
-        <item>0</item>
-        <item>2</item>
-        <item>4</item>
-        <item>6</item>
-        <item>8</item>
-        <item>10</item>
-        <item>12</item>
-        <item>14</item>
-        <item>16</item>
-        <item>18</item>
-        <item>20</item>
-        <item>22</item>
-        <item>24</item>
-        <item>26</item>
-        <item>28</item>
-    </string-array>
-    
-    <string-array name="waist_sizes">
-        <item></item>
-        <item>22</item>
-        <item>24</item>
-        <item>26</item>
-        <item>28</item>
-        <item>30</item>
-        <item>32</item>
-        <item>34</item>
-        <item>36</item>
-        <item>38</item>
-        <item>40</item>
-        <item>42</item>
-        <item>44</item>
-        <item>46</item>
-        <item>48</item>
-    </string-array>
-    
-    <string-array name="length_sizes">
-        <item></item>
-        <item>22</item>
-        <item>24</item>
-        <item>26</item>
-        <item>28</item>
-        <item>30</item>
-        <item>32</item>
-        <item>34</item>
-        <item>36</item>
-        <item>38</item>
-        <item>40</item>
     </string-array>
     
     <string name="colorPrompt">Color: </string>

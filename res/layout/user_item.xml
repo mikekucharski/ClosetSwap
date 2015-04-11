@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="First and Last Name"
+            android:textSize="22sp" 
+            android:focusable="false" />
+
+        <TextView
+            
+            android:id="@+id/tvEmail"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Email Address"
+            android:textSize="12sp"
+            android:focusable="false"  />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bAddUser"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+		android:layout_marginTop="15dp"
+		android:layout_marginBottom="25dp"
+		android:layout_marginLeft="60dp"
+		android:layout_marginRight="10dp"
+        android:text="@string/addUser"
+        android:textSize="14sp"  />
+
+</LinearLayout>

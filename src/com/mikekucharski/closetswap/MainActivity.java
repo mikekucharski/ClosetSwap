@@ -199,6 +199,8 @@ public class MainActivity extends FragmentActivity {
 			nextFragment = new FeedFragment();
 		} else if( name.equals("New Post") ) {
 			nextFragment = new NewPostFragment();
+		} else if( name.equals("Find Users") ) {
+			nextFragment = new FindUsersFragment();
 		} else if( name.equals("Logout") ) {
 			confirmLogout();
     	    return;

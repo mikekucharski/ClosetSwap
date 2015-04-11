@@ -2,6 +2,8 @@ package com.mikekucharski.closetswap;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -24,6 +27,7 @@ public class ItemDetailsActivity extends Activity {
 	private ImageView ivClothingImage;
 	private Button bSendEmail;
 	private String email, title;
+	private Bitmap image = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +73,24 @@ public class ItemDetailsActivity extends Activity {
 		        	ParseObject user = post.getParseObject("owner");
 		        	
 		        	String dateFormatted = Utility.dateFormat(post.getCreatedAt());
-		        	String fullName = user.getString("firstName") + " " + user.getString("lastName");
+		        	String fullName = Character.toUpperCase(user.getString("firstName").charAt(0)) + user.getString("firstName").substring(1) + 
+		        			" " + 
+		        			Character.toUpperCase(user.getString("lastName").charAt(0)) + user.getString("lastName").substring(1);
+		        	
+		        	ParseFile img = (ParseFile) post.get("image");
+                	if(img != null)
+                	{
+						try {
+							byte[] bitmapdata = img.getData();
+							image = BitmapFactory.decodeByteArray(bitmapdata , 0, bitmapdata.length);
+						} catch (ParseException e1) {
+							Log.v("", e1.getMessage());
+						}
+                	}
+                	else
+                	{
+                		image = BitmapFactory.decodeResource(getResources(), R.drawable.app_icon);
+                	}
 		        	
 		        	// set up data used for sending email
 		        	email = user.getString("email");
@@ -83,6 +104,7 @@ public class ItemDetailsActivity extends Activity {
 		        	tvCategory.setText(post.getString("itemType"));
 		        	tvDate.setText(dateFormatted);
 		        	tvSize.setText(post.getString("itemSize"));
+		        	ivClothingImage.setImageBitmap(image);
 
 		        } else {
 		        	Log.d(getClass().getSimpleName(), "Error: " + e.getMessage());

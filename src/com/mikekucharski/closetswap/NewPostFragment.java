@@ -1,5 +1,7 @@
 package com.mikekucharski.closetswap;
 
+import java.io.ByteArrayOutputStream;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
@@ -17,21 +19,21 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 public class NewPostFragment extends Fragment {
 
-	private EditText etTitle, etColor, etDescription, etContactInfo;
+	private EditText etTitle, etItemSize, etColor, etDescription, etContactInfo;
 	private ImageView imageView;
 	private Button bUploadBtn, bCreatePost;
-	private Spinner sItemType, sItemSize, sCondition;
+	private Spinner sItemType, sCondition;
 	private String title, color, description, contactInfo, type, size, condition;
 	private StringBuilder errorDialog;
-	private Drawable defaultEditTextBackground;
-	private Drawable defaultSpinnerBackground;
 	private static final int CAMERA_ID = 1888;
+	private Bitmap photo;
 	
 	
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -46,6 +48,7 @@ public class NewPostFragment extends Fragment {
 		
 		etTitle = (EditText)rootView.findViewById(R.id.postTitle);
 		
+		etItemSize = (EditText)rootView.findViewById(R.id.size);
 		etColor = (EditText)rootView.findViewById(R.id.colorName);
 		etDescription = (EditText)rootView.findViewById(R.id.descriptionText);
 		etContactInfo = (EditText)rootView.findViewById(R.id.contactText);
@@ -56,7 +59,6 @@ public class NewPostFragment extends Fragment {
 		bCreatePost = (Button)rootView.findViewById(R.id.createPost);
 		
 		sItemType = (Spinner)rootView.findViewById(R.id.itemList);
-		sItemSize = (Spinner)rootView.findViewById(R.id.sizeList);
 		sCondition = (Spinner)rootView.findViewById(R.id.conditionList);
 		
 		bUploadBtn.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +67,6 @@ public class NewPostFragment extends Fragment {
 			public void onClick(View v) {
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent,CAMERA_ID);
-
 			}
 		});
 		
@@ -82,71 +83,39 @@ public class NewPostFragment extends Fragment {
 				description = etDescription.getText().toString().trim();
 				contactInfo = etContactInfo.getText().toString().trim();
 				type = sItemType.getSelectedItem().toString().trim();
-				size = sItemSize.getSelectedItem().toString().trim();
+				size = etItemSize.getText().toString().trim();
 				condition = sCondition.getSelectedItem().toString().trim();
 				
-				defaultEditTextBackground = etColor.getBackground();
-				defaultSpinnerBackground = sItemSize.getBackground();
 				if(title.isEmpty() || type.isEmpty() || size.isEmpty() || condition.isEmpty() || color.isEmpty() || contactInfo.isEmpty())
 				{
 					if(title.isEmpty())
 					{
 						errorDialog.append("Title is missing\n");
-						etTitle.setBackgroundColor(Color.parseColor("#ff0000"));
-					}
-					else
-					{
-						etTitle.setBackgroundResource(android.R.drawable.editbox_background);
 					}
 					
 					if(type.isEmpty())
 					{
 						errorDialog.append("Item Type is missing\n");
-						sItemType.setBackgroundColor(Color.parseColor("#ff0000"));
-					}
-					else
-					{
-						sItemType.setBackgroundResource(android.R.drawable.spinner_background);
 					}
 					
 					if(size.isEmpty())
 					{
 						errorDialog.append("Item Size is missing\n");
-						sItemSize.setBackgroundColor(Color.parseColor("#ff0000"));
-					}
-					else
-					{
-						sItemSize.setBackgroundResource(android.R.drawable.spinner_background);
 					}
 					
 					if(condition.isEmpty())
 					{
 						errorDialog.append("Condition is missing\n");
-						sCondition.setBackgroundColor(Color.parseColor("#ff0000"));
-					}
-					else
-					{
-						sCondition.setBackgroundResource(android.R.drawable.spinner_background);
 					}
 					
 					if(color.isEmpty())
 					{
 						errorDialog.append("Color is missing\n");
-						etColor.setBackgroundColor(Color.parseColor("#ff0000"));
-					}
-					else
-					{
-						etColor.setBackgroundResource(android.R.drawable.editbox_background);
 					}
 					
 					if(contactInfo.isEmpty())
 					{
 						errorDialog.append("ContactInfo is missing\n");
-						etContactInfo.setBackgroundColor(Color.parseColor("#ff0000"));
-					}
-					else
-					{
-						etContactInfo.setBackgroundResource(android.R.drawable.editbox_background);
 					}
 					
 					AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -160,7 +129,13 @@ public class NewPostFragment extends Fragment {
 				{
                     getActivity().setProgressBarIndeterminateVisibility(true);
                     
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                    // get byte array here
+                    byte[] byteArray= stream.toByteArray();
+                    
                     ParseObject newPost = new ParseObject("Post");
+                    ParseFile file = new ParseFile("image.png", byteArray);
                     newPost.put("owner", ParseUser.getCurrentUser());
                     newPost.put("title", title);
                     newPost.put("description", description);
@@ -169,6 +144,7 @@ public class NewPostFragment extends Fragment {
                     newPost.put("condition", condition);
                     newPost.put("color", color);
                     newPost.put("contactInfo", contactInfo);
+                    newPost.put("image", file);
                     newPost.saveInBackground(new SaveCallback() {
                     	
                     	@Override
@@ -204,7 +180,7 @@ public class NewPostFragment extends Fragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if(CAMERA_ID == requestCode && resultCode == Activity.RESULT_OK){
-			Bitmap photo = (Bitmap) data.getExtras().get("data");
+			photo = (Bitmap) data.getExtras().get("data");
 			imageView.setImageBitmap(photo);
 		}
 	}
