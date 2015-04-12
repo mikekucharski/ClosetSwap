@@ -192,8 +192,6 @@ public class MainActivity extends FragmentActivity {
 		NavListItem item = (NavListItem) mDrawerList.getItemAtPosition(position);
 		String name = item.name;
 		
-		Toast.makeText(MainActivity.this, "Clicked " + name, Toast.LENGTH_SHORT).show();
-		
 		Fragment nextFragment;
 		if( name.equals("Feed") ) {
 			nextFragment = new FeedFragment();

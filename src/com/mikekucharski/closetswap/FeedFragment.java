@@ -62,12 +62,12 @@ public class FeedFragment extends Fragment {
 	    lvPosts = (ListView) rootView.findViewById(R.id.lvPosts);
 	    etSearchBar = (EditText) rootView.findViewById(R.id.etSearchBar);
 	    
-	    lvPosts.setAdapter(new FeedItemAdapter(this.getActivity(), 0, mItems));
+	    lvPosts.setAdapter(new FeedItemAdapter(this.getActivity(), 0, showItems));
 	    
 	    lvPosts.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            	FeedItem itemClicked = mItems.get(position);
+            	FeedItem itemClicked = showItems.get(position);
             	
             	Intent intent = new Intent(getActivity(), ItemDetailsActivity.class);
             	Bundle b = new Bundle();
@@ -183,6 +183,12 @@ public class FeedFragment extends Fragment {
 	                								 post.getString("color"));
 	                    mItems.add(item);
 	                }
+	                
+	                showItems.clear();
+	                Iterator<FeedItem> mItemsIterator = mItems.iterator();
+					while (mItemsIterator.hasNext()) {
+						showItems.add(mItemsIterator.next());
+					}
 	                ((BaseAdapter) lvPosts.getAdapter()).notifyDataSetChanged();
 	               
 	                mActivity.setProgressBarIndeterminateVisibility(false);
