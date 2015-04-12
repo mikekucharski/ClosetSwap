@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -45,6 +46,8 @@ public class NewPostFragment extends Fragment {
 			Bundle savedInstanceState) {
 		setHasOptionsMenu(true);
 		View rootView = inflater.inflate(R.layout.new_post_fragment, container, false);
+		
+		photo = BitmapFactory.decodeResource(getActivity().getResources(), R.drawable.app_icon);
 		
 		etTitle = (EditText)rootView.findViewById(R.id.postTitle);
 		

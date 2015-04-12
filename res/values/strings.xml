@@ -41,7 +41,7 @@
     <string name="sizelabel">"Size: "</string>
     <string name="colorlabel">"Color: "</string>
     <string name="descriptionlabel">"Description: "</string>
-    <string name="uploadPic">Upload</string>
+    <string name="takePic">Take Pic</string>
     
     <string name="emptyPosts">There are no posts to display. Adding more friends will increase the amount of posts you will see.</string>
     <!-- Start of new_post_fragment.xml strings -->
@@ -65,34 +65,24 @@
     </string-array>
     <string-array name="condition_array">
         <item> </item>
-        <item>0%</item>
-        <item>5%</item>
-        <item>10%</item>
-        <item>15%</item>
-        <item>20%</item>
-        <item>25%</item>
-        <item>30%</item>
-        <item>35%</item>
-        <item>40%</item>
-        <item>45%</item>
-        <item>50%</item>
-        <item>55%</item>
-        <item>60%</item>
-        <item>65%</item>
-        <item>70%</item>
-        <item>75%</item>
-        <item>80%</item>
-        <item>85%</item>
-        <item>90%</item>
-        <item>95%</item>
         <item>100%</item>
+        <item>95%</item>
+        <item>90%</item>
+        <item>85%</item>
+        <item>80%</item>
+        <item>75%</item>
+        <item>70%</item>
+        <item>65%</item>
+        <item>60%</item>
+        <item>55%</item>
+        <item>50%</item>
     </string-array>
     
     <string name="colorPrompt">Color: </string>
     <string name="descriptionPrompt">Description: </string>
     <string name="contactPrompt">Contact Info: </string>
     <string name="back">Back</string>
-    <string name="createPost">Create Post</string>
+    <string name="createPost">Finish</string>
 
     <!-- End of new_post_fragment.xml strings -->
  

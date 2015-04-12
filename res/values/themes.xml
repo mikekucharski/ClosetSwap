@@ -8,7 +8,7 @@
 
 	<!-- ActionBar styles -->
 	<style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-	   <item name="android:background">@color/darkgreen</item>
+	   <item name="android:background">@color/app_red</item>
 	   <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
 	</style>
 	

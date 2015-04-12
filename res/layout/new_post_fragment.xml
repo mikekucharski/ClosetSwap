@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scroller"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true" >
+
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
+    android:layout_height="wrap_content" 
     android:orientation="vertical">
 	
     <!-- Start of Buttons View -->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:padding="3dp" >
 
         <Button
             android:id="@+id/bUploadBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/uploadPic"
-            android:textSize="14sp" />
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="@string/takePic"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/createPost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:text="@string/createPost"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
     </RelativeLayout>
         <!-- End of Buttons View -->
@@ -32,13 +38,13 @@
         <!-- Start of Image View -->
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="80dp"
+        android:layout_height="200dp"
         android:padding="3dp">
 
         <ImageView
             android:id="@+id/newPic_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:src="@drawable/app_icon" />
@@ -236,3 +242,5 @@
     <!-- End of Contact View -->
 
 </LinearLayout>
+
+</ScrollView>
